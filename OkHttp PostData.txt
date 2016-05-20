@@ -1,0 +1,52 @@
+ public class PostData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showpDialog();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient();
+            RequestBody req = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("username", "disha")
+                    .addFormDataPart("password", "1234")
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url("http://openspace.tranetech.com/mis/store_mall/login.php")
+                    .post(req)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                Log.d("Response :", "Response :" + response.body().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            System.out.println(" response------------>     " + s);
+            hidepDialog();
+
+           /* try {
+
+                JSONObject Jobject = new JSONObject(s);
+                JSONArray jsonArray= Jobject.getJSONArray("Data");
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+*/
+        }
+    }

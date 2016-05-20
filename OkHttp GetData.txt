@@ -1,0 +1,50 @@
+ 
+//Calling this class using like this
+new GetData().execute(your url here);
+
+
+
+ public class GetData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showpDialog();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+                okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url(your url here)
+                        .build();
+                okhttp3.Response response = client.newCall(request).execute();
+                return response.body().string();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            System.out.println(" response------------>     " + s);
+            hidepDialog();
+
+            try {
+
+                //Manage your data here using JSONObject and JSONArray
+                //JSONObject Jobject = new JSONObject(s);
+                //JSONArray jsonArray= Jobject.getJSONArray("Data");
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
